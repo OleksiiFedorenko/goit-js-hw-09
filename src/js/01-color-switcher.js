@@ -10,14 +10,14 @@ function startColorChanging() {
   bgColorChanger();
   colorChangingIntId = setInterval(bgColorChanger, 1000);
 
-  startStopBtnEnabler(true, false);
+  startStopBtnDisabler(true, false);
 }
 
 function stopColorChanging() {
   hangEventListener(startBtnRef, startColorChanging);
 
   clearInterval(colorChangingIntId);
-  startStopBtnEnabler(false, true);
+  startStopBtnDisabler(false, true);
 }
 
 function hangEventListener(ref, foo) {
@@ -28,7 +28,7 @@ function bgColorChanger() {
   document.body.style.backgroundColor = getRandomHexColor();
 }
 
-function startStopBtnEnabler(startBtn, stopBtn) {
+function startStopBtnDisabler(startBtn, stopBtn) {
   startBtnRef.disabled = startBtn;
   stopBtnRef.disabled = stopBtn;
 }

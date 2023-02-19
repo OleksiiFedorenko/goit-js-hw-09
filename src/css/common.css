@@ -21,6 +21,8 @@ button {
   cursor: pointer;
 }
 
+/* 1st task */
+
 .cs-wrapper {
   width: 100%;
   height: 80vh;
@@ -33,5 +35,28 @@ button {
 .cs-btn {
   min-width: 120px;
   padding: 18px 10px;
+  text-transform: uppercase;
+}
+
+/* 2nd task */
+
+.timer {
+  display: flex;
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.value {
+  font-size: 36px;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 500;
   text-transform: uppercase;
 }
