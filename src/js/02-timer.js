@@ -20,35 +20,49 @@ const options = {
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
-    // console.log(selectedDates[0].getTime());
-    // console.log(Date.now());
     if (selectedDates[0].getTime() < Date.now()) {
       alert('Please choose a date in the future');
-      btnRef.disabled = true;
+      btnDisabler(true);
     } else {
       chosenTime = selectedDates[0].getTime();
-      btnRef.disabled = false;
       btnRef.addEventListener('click', runCountdown, { once: true });
+      btnDisabler(false);
     }
   },
 };
-let chosenTime = null;
+
+let chosenTime = 0;
 let countdownIntId = null;
 
-const fp = flatpickr(calendarRef, options);
+flatpickr(calendarRef, options);
 
 function runCountdown() {
-  btnRef.disabled = true;
-  countdownIntId = setInterval(() => {
-    const deltaTime = chosenTime - Date.now();
-    const { days, hours, minutes, seconds } = convertMs(deltaTime);
-    // console.log(days, hours, minutes, addLeadingZero(seconds));
-    daysRef.textContent = addLeadingZero(days);
-    hoursRef.textContent = addLeadingZero(hours);
-    minutesRef.textContent = addLeadingZero(minutes);
-    secondsRef.textContent = addLeadingZero(seconds);
-    if (!days && !hours && !minutes && !seconds) clearInterval(countdownIntId);
-  }, 1000);
+  btnDisabler(true);
+  setCountdownData();
+  countdownIntId = setInterval(intCountdownData, 1000);
+}
+
+function intCountdownData() {
+  setCountdownData();
+  if (calcDeltaTime() < 1000) clearInterval(countdownIntId);
+}
+
+function setCountdownData() {
+  const deltaTime = calcDeltaTime();
+  const { days, hours, minutes, seconds } = convertMs(deltaTime);
+
+  daysRef.textContent = addLeadingZero(days);
+  hoursRef.textContent = addLeadingZero(hours);
+  minutesRef.textContent = addLeadingZero(minutes);
+  secondsRef.textContent = addLeadingZero(seconds);
+}
+
+function calcDeltaTime() {
+  return chosenTime - Date.now();
+}
+
+function addLeadingZero(value) {
+  return String(value).padStart(2, '0');
 }
 
 function convertMs(ms) {
@@ -69,6 +83,6 @@ function convertMs(ms) {
   return { days, hours, minutes, seconds };
 }
 
-function addLeadingZero(value) {
-  return String(value).padStart(2, '0');
+function btnDisabler(state) {
+  btnRef.disabled = state;
 }
