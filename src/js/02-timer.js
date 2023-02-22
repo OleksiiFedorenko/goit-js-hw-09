@@ -1,10 +1,5 @@
 import flatpickr from 'flatpickr';
-// import Notiflix from 'notiflix';
-// import { Notify } from 'notiflix/build/notiflix-notify-aio';
-// import { Report } from 'notiflix/build/notiflix-report-aio';
-// import { Confirm } from 'notiflix/build/notiflix-confirm-aio';
-// import { Loading } from 'notiflix/build/notiflix-loading-aio';
-// import { Block } from 'notiflix/build/notiflix-block-aio';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import 'flatpickr/dist/flatpickr.min.css';
 
 const calendarRef = document.querySelector('#datetime-picker');
@@ -21,7 +16,7 @@ const options = {
   minuteIncrement: 1,
   onClose(selectedDates) {
     if (selectedDates[0].getTime() < Date.now()) {
-      alert('Please choose a date in the future');
+      Notify.failure('Please choose a date in the future');
       btnDisabler(true);
     } else {
       chosenTime = selectedDates[0].getTime();
