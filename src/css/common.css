@@ -60,3 +60,15 @@ button {
   font-weight: 500;
   text-transform: uppercase;
 }
+
+.prom-form {
+  display: flex;
+  gap: 10px;
+  align-items: end;
+}
+
+.prom-label {
+  display: flex;
+  flex-direction: column;
+  width: 150px;
+}
