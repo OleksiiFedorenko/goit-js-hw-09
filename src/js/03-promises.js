@@ -7,15 +7,15 @@ function onSubmit(evt) {
   evt.preventDefault();
 
   const { delay, step, amount } = evt.currentTarget.elements;
-  console.log(delay.value, step.value, amount.value);
 
-  const promisesDelays = new Array(Number(amount.value))
+  new Array(Number(amount.value))
     .fill(0)
-    .map((_, i) => Number(delay.value) + i * Number(step.value));
-  console.log(promisesDelays);
-
-  const promises = promisesDelays.map((d, i) => createPromise(i + 1, d));
-  console.log(promises);
+    .map((_, i) => Number(delay.value) + i * Number(step.value))
+    .forEach((d, i) =>
+      createPromise(i + 1, d)
+        .then(Notify.success)
+        .catch(Notify.failure)
+    );
 
   evt.currentTarget.reset();
 }
@@ -28,15 +28,5 @@ function createPromise(position, delay) {
       if (shouldResolve) resolve(`Fulfilled promise ${position} in ${delay}ms`);
       else reject(`Rejected promise ${position} in ${delay}ms`);
     }, delay);
-  })
-    .then(onFulfilled)
-    .catch(onRejected);
-}
-
-function onFulfilled(message) {
-  Notify.success(message);
-}
-
-function onRejected(message) {
-  Notify.failure(message);
+  });
 }
